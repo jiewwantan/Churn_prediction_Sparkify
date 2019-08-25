@@ -22,12 +22,11 @@ My [Medium post](https://medium.com/@jiewwantan/sparkify-user-churn-prediction-u
 
 ## Instructions:
 
-Data: 
-[Tiny 240Mb](https://drive.google.com/open?id=1-hi73PWXdMxNLvYWJtL2Y6Rig2rT5B5K)
-[Big 12Gb](s3a://udacity-dsnd/sparkify/sparkify_event_data.json)
+Data:<br/>
+[Tiny 240Mb](https://drive.google.com/open?id=1-hi73PWXdMxNLvYWJtL2Y6Rig2rT5B5K)<br/>
+Big 12Gb: s3a://udacity-dsnd/sparkify/sparkify_event_data.json)<br/>
 
-1. To run Sparkify_local.ipynb:
-    `python data/process_data.py data/disaster_messages.csv data/disaster_categories.csv data/DisasterResponse.db`
+1. To run Sparkify_local.ipynb, simply run it in Jupyter notebook. 
 2. To run Sparkify_AWS_EMR.ipynb:
   Spin up an [AWS EMR](https://console.aws.amazon.com/elasticmapreduce/) cluster, create the Sparkify_AWS_EMR.ipynb notebook.
         
