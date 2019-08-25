@@ -13211,7 +13211,7 @@ The project will train the tiny dataset on a local machine to get a sense of the
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Read smaller dataset for analysis</span>
-<span class="n">event_data</span> <span class="o">=</span> <span class="s2">&quot;./data/medium-sparkify-event-data.json&quot;</span>
+<span class="n">event_data</span> <span class="o">=</span> <span class="s2">&quot;./data/tiny_sparkify_event_data.json&quot;</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="n">event_data</span><span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>

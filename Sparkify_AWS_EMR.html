@@ -15761,12 +15761,39 @@ summary.show()
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Save-the-trained-model">Save the trained model<a class="anchor-link" href="#Save-the-trained-model">&#182;</a></h4>
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-python2"><pre><span></span> 
+<div class=" highlight hl-python2"><pre><span></span>model.bestModel.write().overwrite().save(&#39;GBTClassifier&#39;)
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Load-a-trained-model">Load a trained model<a class="anchor-link" href="#Load-a-trained-model">&#182;</a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python2"><pre><span></span>best_model = GBTClassificationModel.load(&#39;GBTClassifier&#39;)
 </pre></div>
 
     </div>
