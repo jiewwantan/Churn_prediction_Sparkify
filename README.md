@@ -51,7 +51,7 @@ All features are adopted for modelling the large dataset.
 ### Test data evaluation results
 
 On tiny data set on local machine:
-`Evaluation result:
+`Evaluation result:<br />
 +---------+------+------+--------+
 |precision|recall|    f1|accuracy|
 +---------+------+------+--------+
@@ -59,7 +59,7 @@ On tiny data set on local machine:
 +---------+------+------+--------+`
 
 On large dataset on AWS: 
-`Evaluation result:
+`Evaluation result:<br />
 +------+------+---------+--------+
 |    f1|recall|precision|accuracy|
 +------+------+---------+--------+
