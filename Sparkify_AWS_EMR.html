@@ -2,7 +2,7 @@
 <html>
 <head><meta charset="utf-8" />
 
-<title>Sparkify_AWS_EMR</title>
+<title>Sparkify_6336</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13127,10 +13127,10 @@ The project will train the tiny dataset on a local machine to get a sense of the
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[32]:</div>
+<div class="prompt input_prompt">In&nbsp;[37]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-python2"><pre><span></span>from pyspark.sql.functions import desc
+<div class=" highlight hl-python2"><pre><span></span>from pyspark.sql.functions import skewness, kurtosis
 </pre></div>
 
     </div>
@@ -13147,7 +13147,7 @@ The project will train the tiny dataset on a local machine to get a sense of the
 # Starter code
 from pyspark.sql import SparkSession
 from pyspark.sql import Window
-from pyspark.sql.functions import avg, col, count, desc, stddev, udf, isnan, when, isnull, mean, min, max
+from pyspark.sql.functions import avg, col, count, desc, stddev, udf, isnan, when, isnull, mean, min, max, skewness, kurtosis
 from pyspark.sql.types import IntegerType, BooleanType
 from pyspark.sql.functions import max as max_fn
 from pyspark.sql.functions import min as min_fn
@@ -13190,7 +13190,7 @@ from time import time
 
 <div class="output_html rendered_html output_subarea ">
 <table>
-<tr><th>ID</th><th>YARN Application ID</th><th>Kind</th><th>State</th><th>Spark UI</th><th>Driver log</th><th>Current session?</th></tr><tr><td>2</td><td>application_1566628057740_0003</td><td>pyspark</td><td>idle</td><td><a target="_blank" href="http://ip-172-31-25-27.us-west-2.compute.internal:20888/proxy/application_1566628057740_0003/">Link</a></td><td><a target="_blank" href="http://ip-172-31-21-7.us-west-2.compute.internal:8042/node/containerlogs/container_1566628057740_0003_01_000001/livy">Link</a></td><td>✔</td></tr></table>
+<tr><th>ID</th><th>YARN Application ID</th><th>Kind</th><th>State</th><th>Spark UI</th><th>Driver log</th><th>Current session?</th></tr><tr><td>3</td><td>application_1566628057740_0004</td><td>pyspark</td><td>idle</td><td><a target="_blank" href="http://ip-172-31-25-27.us-west-2.compute.internal:20888/proxy/application_1566628057740_0004/">Link</a></td><td><a target="_blank" href="http://ip-172-31-21-7.us-west-2.compute.internal:8042/node/containerlogs/container_1566628057740_0004_01_000001/livy">Link</a></td><td>✔</td></tr></table>
 </div>
 
 </div>
@@ -14459,7 +14459,7 @@ only showing top 10 rows</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-python2"><pre><span></span>df_cleaned.filter(df_cleaned.page==&quot;Cancellation Confirmation&quot;).select(&quot;userId&quot;).dropDuplicates().count()
@@ -14469,10 +14469,27 @@ only showing top 10 rows</pre>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>5003</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-python2"><pre><span></span>churn_list = df_cleaned.filter(df_cleaned.page==&quot;Cancellation Confirmation&quot; ).select(&quot;userId&quot;).dropDuplicates()
@@ -14501,8 +14518,8 @@ df_churn.dropDuplicates([&quot;userId&quot;, &quot;gender&quot;]).groupby([&quot
 |false|  null|    1|
 |false|     F| 8279|
 |false|     M| 8995|
-| true|     F| 2347|
 | true|     M| 2656|
+| true|     F| 2347|
 +-----+------+-----+</pre>
 </div>
 </div>
@@ -14513,7 +14530,7 @@ df_churn.dropDuplicates([&quot;userId&quot;, &quot;gender&quot;]).groupby([&quot
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-python2"><pre><span></span>churn_events = udf(lambda x: 1 if x == &quot;Cancellation Confirmation&quot; else 0, IntegerType())
@@ -14527,7 +14544,7 @@ df_cleaned = df_cleaned.withColumn(&quot;churn_flag&quot;, churn_events(&quot;pa
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-python2"><pre><span></span># Calculate percentage of users who churned
@@ -14550,7 +14567,7 @@ churn_flag = df_cleaned.groupBy(&#39;userId&#39;).agg({&#39;churn_flag&#39;: &#3
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>----------------------------------------
-Exception happened during processing of request from (&#39;127.0.0.1&#39;, 45650)
+Exception happened during processing of request from (&#39;127.0.0.1&#39;, 56032)
 ----------------------------------------
 Traceback (most recent call last):
   File &#34;/usr/lib64/python2.7/SocketServer.py&#34;, line 293, in _handle_request_noblock
@@ -14615,36 +14632,16 @@ TypeError: object of type &#39;NoneType&#39; has no len()</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Number-of-cancellations">Number of cancellations<a class="anchor-link" href="#Number-of-cancellations">&#182;</a></h4>
+<h4 id="Number-of-upgrades">Number of upgrades<a class="anchor-link" href="#Number-of-upgrades">&#182;</a></h4>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-python2"><pre><span></span>df_cleaned.filter(df_cleaned.page==&quot;Cancellation Confirmation&quot;).select(&quot;userId&quot;).dropDuplicates().count()
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Number-of-downgrades:">Number of downgrades:<a class="anchor-link" href="#Number-of-downgrades:">&#182;</a></h4>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-python2"><pre><span></span>df_cleaned.filter(df_cleaned.page==&quot;Downgrade&quot;).select(&quot;userId&quot;).dropDuplicates().count()
+<div class=" highlight hl-python2"><pre><span></span>df_cleaned.filter(df_cleaned.page==&quot;Submit Upgrade&quot;).select(&quot;userId&quot;).dropDuplicates().count()
 </pre></div>
 
     </div>
@@ -14661,7 +14658,7 @@ TypeError: object of type &#39;NoneType&#39; has no len()</pre>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>15209</pre>
+<pre>12082</pre>
 </div>
 </div>
 
@@ -14671,10 +14668,88 @@ TypeError: object of type &#39;NoneType&#39; has no len()</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-python2"><pre><span></span>downgrade_list = df_cleaned.filter(df_cleaned.page==&quot;Downgrade&quot; ).select(&quot;userId&quot;).distinct()
+<div class=" highlight hl-python2"><pre><span></span>upgrade_list = df_cleaned.filter(df_cleaned.page==&quot;Submit Upgrade&quot; ).select(&quot;userId&quot;).distinct()
+upgraded_users = [(row[&#39;userId&#39;]) for row in upgrade_list.collect()]
+df_upgrade = df_cleaned.withColumn(&quot;upgrade&quot;, df_cleaned.userId.isin(upgraded_users))
+df_upgrade.dropDuplicates([&quot;userId&quot;, &quot;gender&quot;]).groupby([&quot;upgrade&quot;, &quot;gender&quot;]).count().sort(&quot;upgrade&quot;).show()
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>+-------+------+-----+
+|upgrade|gender|count|
++-------+------+-----+
+|  false|     F| 4894|
+|  false|     M| 5301|
+|  false|  null|    1|
+|   true|     M| 6350|
+|   true|     F| 5732|
++-------+------+-----+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Number-of-downgrades:">Number of downgrades:<a class="anchor-link" href="#Number-of-downgrades:">&#182;</a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python2"><pre><span></span>df_cleaned.filter(df_cleaned.page==&quot;Submit Downgrade&quot;).select(&quot;userId&quot;).dropDuplicates().count()
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>5103</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python2"><pre><span></span>downgrade_list = df_cleaned.filter(df_cleaned.page==&quot;Submit Downgrade&quot; ).select(&quot;userId&quot;).distinct()
 downgraded_users = [(row[&#39;userId&#39;]) for row in downgrade_list.collect()]
 df_downgrade = df_cleaned.withColumn(&quot;downgrade&quot;, df_cleaned.userId.isin(downgraded_users))
 df_downgrade.dropDuplicates([&quot;userId&quot;, &quot;gender&quot;]).groupby([&quot;downgrade&quot;, &quot;gender&quot;]).count().sort(&quot;downgrade&quot;).show()
@@ -14697,11 +14772,11 @@ df_downgrade.dropDuplicates([&quot;userId&quot;, &quot;gender&quot;]).groupby([&
 <pre>+---------+------+-----+
 |downgrade|gender|count|
 +---------+------+-----+
-|    false|     F| 3371|
+|    false|     M| 9036|
+|    false|     F| 8138|
 |    false|  null|    1|
-|    false|     M| 3697|
-|     true|     F| 7255|
-|     true|     M| 7954|
+|     true|     M| 2615|
+|     true|     F| 2488|
 +---------+------+-----+</pre>
 </div>
 </div>
@@ -14733,7 +14808,7 @@ df_downgrade.dropDuplicates([&quot;userId&quot;, &quot;gender&quot;]).groupby([&
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-python2"><pre><span></span># Latest level
@@ -14787,6 +14862,40 @@ feat_gender = df_cleaned.select([&#39;userId&#39;, &#39;gender&#39;])\
 </div>
 
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[38]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python2"><pre><span></span>feat_gender.select(skewness(&quot;gender&quot;), kurtosis(&quot;gender&quot;)).show()
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>+-------------------+-------------------+
+|   skewness(gender)|   kurtosis(gender)|
++-------------------+-------------------+
+|0.09220664431939639|-1.9914979347433575|
++-------------------+-------------------+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -14796,7 +14905,7 @@ feat_gender = df_cleaned.select([&#39;userId&#39;, &#39;gender&#39;])\
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[33]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-python2"><pre><span></span># Latest level
@@ -14851,6 +14960,40 @@ feat_level = df_cleaned.select([&#39;userId&#39;, &#39;level&#39;, &#39;ts&#39;]
 </div>
 
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[39]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python2"><pre><span></span>feat_level.select(skewness(&quot;level&quot;), kurtosis(&quot;level&quot;)).show()
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>+-------------------+-------------------+
+|    skewness(level)|    kurtosis(level)|
++-------------------+-------------------+
+|-0.4025645802550173|-1.8379417587241018|
++-------------------+-------------------+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -14860,7 +15003,7 @@ feat_level = df_cleaned.select([&#39;userId&#39;, &#39;level&#39;, &#39;ts&#39;]
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-python2"><pre><span></span>feat_song = df_cleaned \
@@ -14869,8 +15012,19 @@ feat_level = df_cleaned.select([&#39;userId&#39;, &#39;level&#39;, &#39;ts&#39;]
               .count()\
               .withColumnRenamed(&quot;count&quot;, &quot;num_song&quot;) \
               .orderBy(&quot;userId&quot;)
+</pre></div>
 
-feat_song.describe().show(5)
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python2"><pre><span></span>feat_song.describe().show(5)
 </pre></div>
 
     </div>
@@ -14903,6 +15057,40 @@ feat_song.describe().show(5)
 </div>
 
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[40]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python2"><pre><span></span>feat_song.select(skewness(&quot;num_song&quot;), kurtosis(&quot;num_song&quot;)).show()
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>+------------------+------------------+
+|skewness(num_song)|kurtosis(num_song)|
++------------------+------------------+
+|135.95349045633083|19660.671563405533|
++------------------+------------------+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -14912,7 +15100,7 @@ feat_song.describe().show(5)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-python2"><pre><span></span># Number of artists listened
@@ -14924,8 +15112,19 @@ feat_artist = df_cleaned \
     .count() \
     .withColumnRenamed(&quot;count&quot;, &quot;num_artist&quot;) \
     .orderBy(&quot;userId&quot;)
+</pre></div>
 
-feat_artist.describe().show()
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python2"><pre><span></span>feat_artist.describe().show()
 </pre></div>
 
     </div>
@@ -14958,6 +15157,40 @@ feat_artist.describe().show()
 </div>
 
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[41]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python2"><pre><span></span>feat_artist.select(skewness(&quot;num_artist&quot;), kurtosis(&quot;num_artist&quot;)).show()
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>+--------------------+--------------------+
+|skewness(num_artist)|kurtosis(num_artist)|
++--------------------+--------------------+
+|  1.5260667285754526|   2.656182841474317|
++--------------------+--------------------+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -14967,7 +15200,7 @@ feat_artist.describe().show()
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-python2"><pre><span></span>feat_playlist = df_cleaned \
@@ -14977,7 +15210,19 @@ feat_artist.describe().show()
     .count() \
     .withColumnRenamed(&#39;count&#39;, &#39;num_playlist_song&#39;) \
     .orderBy(&quot;userId&quot;)
-feat_playlist.describe().show()
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python2"><pre><span></span>feat_playlist.describe().show()
 </pre></div>
 
     </div>
@@ -15010,6 +15255,40 @@ feat_playlist.describe().show()
 </div>
 
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[42]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python2"><pre><span></span>feat_playlist.select(skewness(&quot;num_playlist_song&quot;), kurtosis(&quot;num_playlist_song&quot;)).show()
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>+---------------------------+---------------------------+
+|skewness(num_playlist_song)|kurtosis(num_playlist_song)|
++---------------------------+---------------------------+
+|         2.3914875986095625|          8.073009618134558|
++---------------------------+---------------------------+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -15019,7 +15298,7 @@ feat_playlist.describe().show()
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-python2"><pre><span></span>feat_friends = df_cleaned \
@@ -15029,7 +15308,19 @@ feat_playlist.describe().show()
     .count() \
     .withColumnRenamed(&#39;count&#39;, &#39;num_friend&#39;) \
     .orderBy(&quot;userId&quot;)
-feat_friends.describe().show()
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python2"><pre><span></span>feat_friends.describe().show()
 </pre></div>
 
     </div>
@@ -15062,6 +15353,40 @@ feat_friends.describe().show()
 </div>
 
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[43]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python2"><pre><span></span>feat_friends.select(skewness(&quot;num_friend&quot;), kurtosis(&quot;num_friend&quot;)).show()
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>+--------------------+--------------------+
+|skewness(num_friend)|kurtosis(num_friend)|
++--------------------+--------------------+
+|  2.3834675795984976|   8.182711524378096|
++--------------------+--------------------+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -15071,7 +15396,7 @@ feat_friends.describe().show()
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-python2"><pre><span></span># Total length of listening
@@ -15081,7 +15406,19 @@ feat_listentime = df_cleaned \
     .sum() \
     .withColumnRenamed(&#39;sum(length)&#39;, &#39;time_listen&#39;) \
     .orderBy(&quot;userId&quot;)
-feat_listentime.describe().show()
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python2"><pre><span></span>feat_listentime.describe().show()
 </pre></div>
 
     </div>
@@ -15114,6 +15451,40 @@ feat_listentime.describe().show()
 </div>
 
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[44]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python2"><pre><span></span>feat_listentime.select(skewness(&quot;time_listen&quot;), kurtosis(&quot;time_listen&quot;)).show()
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>+---------------------+---------------------+
+|skewness(time_listen)|kurtosis(time_listen)|
++---------------------+---------------------+
+|    2.439989611449916|    8.466901311178267|
++---------------------+---------------------+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -15123,7 +15494,7 @@ feat_listentime.describe().show()
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-python2"><pre><span></span>feat_avgsongs = df_cleaned.filter(df_cleaned.page ==&quot;NextSong&quot;) \
@@ -15133,8 +15504,19 @@ feat_listentime.describe().show()
                                .agg({&#39;count&#39;:&#39;avg&#39;}) \
                                .withColumnRenamed(&#39;avg(count)&#39;, &#39;avg_songs&#39;) \
                                .orderBy(&quot;userId&quot;)
+</pre></div>
 
-feat_avgsongs.describe().show()
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python2"><pre><span></span>feat_avgsongs.describe().show()
 </pre></div>
 
     </div>
@@ -15167,6 +15549,40 @@ feat_avgsongs.describe().show()
 </div>
 
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[45]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python2"><pre><span></span>feat_avgsongs.select(skewness(&quot;avg_songs&quot;), kurtosis(&quot;avg_songs&quot;)).show()
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>+-------------------+-------------------+
+|skewness(avg_songs)|kurtosis(avg_songs)|
++-------------------+-------------------+
+|  1.736381217684329|  8.096277081017185|
++-------------------+-------------------+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -15176,7 +15592,7 @@ feat_avgsongs.describe().show()
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[29]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-python2"><pre><span></span>feat_sesstime = df_cleaned.groupBy([&quot;userId&quot;, &quot;sessionId&quot;]) \
@@ -15185,8 +15601,19 @@ feat_avgsongs.describe().show()
 feat_avgtime = feat_sesstime.groupby(&quot;userId&quot;) \
                     .agg(avg(feat_sesstime.sessTime).alias(&quot;avgSessTime&quot;)) \
                     .orderBy(&quot;userId&quot;)
+</pre></div>
 
-feat_avgtime.describe().show()
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python2"><pre><span></span>feat_avgtime.describe().show()
 </pre></div>
 
     </div>
@@ -15212,6 +15639,40 @@ feat_avgtime.describe().show()
 |    min|           1000025|               0.0|
 |    max|           1999996| 5453.363730301772|
 +-------+------------------+------------------+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[46]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python2"><pre><span></span>feat_avgtime.select(skewness(&quot;avgSessTime&quot;), kurtosis(&quot;avgSessTime&quot;)).show()
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>+---------------------+---------------------+
+|skewness(avgSessTime)|kurtosis(avgSessTime)|
++---------------------+---------------------+
+|   2.8166509927927756|   38.509616923162206|
++---------------------+---------------------+</pre>
 </div>
 </div>
 
@@ -15270,13 +15731,7 @@ only showing top 5 rows</pre>
 <div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-python2"><pre><span></span>feat_session = df_cleaned.select(&quot;userId&quot;, &quot;sessionId&quot;) \
-                .dropDuplicates() \
-                .groupby(&quot;userId&quot;) \
-                .count() \
-                .withColumnRenamed(&#39;count&#39;, &#39;session&#39;) \
-                .orderBy(&quot;userId&quot;)
-feat_session.describe().show()
+<div class=" highlight hl-python2"><pre><span></span>feat_session.describe().show()
 </pre></div>
 
     </div>
@@ -15309,6 +15764,58 @@ feat_session.describe().show()
 </div>
 
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[31]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python2"><pre><span></span>feat_session = df_cleaned.select(&quot;userId&quot;, &quot;sessionId&quot;) \
+                .dropDuplicates() \
+                .groupby(&quot;userId&quot;) \
+                .count() \
+                .withColumnRenamed(&#39;count&#39;, &#39;session&#39;) \
+                .orderBy(&quot;userId&quot;)
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[47]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python2"><pre><span></span>feat_session.select(skewness(&quot;session&quot;), kurtosis(&quot;session&quot;)).show()
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>+------------------+-----------------+
+| skewness(session)|kurtosis(session)|
++------------------+-----------------+
+|149.21426452603328|22266.26341038374|
++------------------+-----------------+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -15318,7 +15825,7 @@ feat_session.describe().show()
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="prompt input_prompt">In&nbsp;[48]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-python2"><pre><span></span># label user who churned using the churn_flag defined earlier. 
@@ -15333,7 +15840,7 @@ df_cleaned = df_cleaned.withColumn(&#39;churn&#39;, max(&#39;churn_flag&#39;).ov
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="prompt input_prompt">In&nbsp;[49]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-python2"><pre><span></span>label = df_cleaned \
@@ -15341,7 +15848,19 @@ df_cleaned = df_cleaned.withColumn(&#39;churn&#39;, max(&#39;churn_flag&#39;).ov
     .dropDuplicates() \
     .withColumnRenamed(&quot;churn&quot;, &quot;label&quot;) \
     .orderBy(&quot;userId&quot;)
-label.describe().show()
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python2"><pre><span></span>label.describe().show()
 </pre></div>
 
     </div>
@@ -15374,6 +15893,40 @@ label.describe().show()
 </div>
 
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[50]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python2"><pre><span></span>label.select(skewness(&quot;label&quot;), kurtosis(&quot;label&quot;)).show()
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>+------------------+--------------------+
+|   skewness(label)|     kurtosis(label)|
++------------------+--------------------+
+|1.3200520841972045|-0.25746249500661467|
++------------------+--------------------+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -15383,7 +15936,7 @@ label.describe().show()
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[36]:</div>
+<div class="prompt input_prompt">In&nbsp;[51]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-python2"><pre><span></span>dataset = feat_gender.join(feat_level,&#39;userID&#39;,&#39;outer&#39;) \
@@ -15398,8 +15951,19 @@ label.describe().show()
     .join(label,&#39;userID&#39;,&#39;outer&#39;) \
     .drop(&#39;userID&#39;) \
     .fillna(0)
+</pre></div>
 
-dataset.show(5)
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[36]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python2"><pre><span></span>dataset.show(5)
 </pre></div>
 
     </div>
@@ -15426,6 +15990,36 @@ dataset.show(5)
 |     0|    1|     299|       215|                7|         4|59019.778759999994|              47.2|197.01666666666668|      5|    0|
 +------+-----+--------+----------+-----------------+----------+------------------+------------------+------------------+-------+-----+
 only showing top 5 rows</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[52]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python2"><pre><span></span>dataset.head()
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Row(gender=0, level=0, num_song=1317, num_artist=767, num_playlist_song=25, num_friend=14, time_listen=259349.89726000009, avg_songs=48.666666666666664, avgSessTime=194.9060606060606, session=22, label=1)</pre>
 </div>
 </div>
 
